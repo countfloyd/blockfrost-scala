@@ -1,12 +1,14 @@
 package io.blockfrost.sdk
 
+import cats.syntax.option.*
 import io.blockfrost.sdk.TestContextSupport.RichString
 import io.blockfrost.sdk.api.MetadataApi.{MetadataContentCbor, MetadataContentJson, MetadataLabel}
 import io.blockfrost.sdk.api.{MetadataApi, MetadataApiImpl}
 import io.blockfrost.sdk.common.SortedPageRequest
 import io.blockfrost.sdk.util.FutureResponseConverter.FutureResponseOps
-import org.json4s.JsonAST.JValue
-import org.json4s.{JObject, JString}
+import io.circe.*
+import io.circe.generic.auto._
+import io.circe.syntax.*
 import org.scalatest.flatspec.AsyncFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -17,7 +19,7 @@ class MetadataApiSpec extends AsyncFlatSpec with Matchers with TestContextSuppor
     val api: MetadataApi[Future, Any]
     val env: String
     val txHash: String
-    val jsonMetadata: Option[JValue]
+    val jsonMetadata: Option[Json]
     val cborMetadata: Option[String]
   }
 
@@ -25,7 +27,7 @@ class MetadataApiSpec extends AsyncFlatSpec with Matchers with TestContextSuppor
     val api: MetadataApi[Future, Any] = new MetadataApiImpl[Future, Any] with TestnetApiClient
     val env: String = TestnetEnv
     val txHash: String = "1c8997f9f0debde5b15fe29f0f18839a64e51c19ccdbe89e2811930d777c9b68"
-    val jsonMetadata: Option[JValue] = JString("cardano").toSome
+    val jsonMetadata: Option[Json] = Json.fromString("cardano").some
     val cborMetadata: Option[String] = "\\xa1006763617264616e6f".some
   }
 
@@ -33,7 +35,7 @@ class MetadataApiSpec extends AsyncFlatSpec with Matchers with TestContextSuppor
     val api: MetadataApi[Future, Any] = new MetadataApiImpl[Future, Any] with MainnetApiClient
     val env: String = MainnetEnv
     val txHash: String = "b92e9b4fa85bc2597f0491700bc2173765918af16deb5683d859941e6d399475"
-    val jsonMetadata: Option[JValue] = JObject(List(("La_RepsistancE", JString("Was here")))).toSome
+    val jsonMetadata: Option[Json] = (List(("La_RepsistancE", Json.fromString("Was here"))).asJson).some
     val cborMetadata: Option[String] = "\\xa100a16e4c615f52657073697374616e6345685761732068657265".some
   }
 
