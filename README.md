@@ -1,4 +1,7 @@
 [![Scala CI with SBT](https://github.com/blockfrost/blockfrost-scala/actions/workflows/actions.yml/badge.svg?branch=master)](https://github.com/blockfrost/blockfrost-scala/actions/workflows/actions.yml)
+# Fork Note
+
+This is a fork of blockfrost-scala in order to add Scala 3 support.
 
 # blockfrost-scala
 
