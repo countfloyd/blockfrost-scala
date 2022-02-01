@@ -1,7 +1,7 @@
 scalaVersion := "3.1.1"
 organization := "com.g1.blockfrost"
 name := "blockfrost-scala"
-version := "1.0.0"
+version := "1.0.0-SNAPSHOT"
 
 val circeVersion = "0.14.1"
 val json4sVersion = "4.0.4"
